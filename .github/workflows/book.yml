@@ -33,7 +33,7 @@ jobs:
       - name: Generate book from markdown
         run: 'mdbook build ./docs'
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: './docs/book/'
       - name: Deploy to GitHub Pages
