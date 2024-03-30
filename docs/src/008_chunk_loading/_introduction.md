@@ -8,7 +8,7 @@ It was the last day of school; finals were taken, but, in some weird throwback t
 
 I bumped into some students as I traipsed around the campus. I saw a marijuana dispensary and thought, "huh, that's right, that's legal now," but I didn't particularly want to get high. It made me sad, just thinking about it. I found my way into a basement, and some kids blocked me at the door; there was a party under way, and they didn't feel very charitable. I laughed and told them I didn't drink, but I didn't have a problem buying my own beer anyway.
 
-I woke up sad, feeling like I'd lost everything. Just one of those great big feelings of loss. Part of that is an [article I read](https://github.com/department-of-veterans-affairs/va.gov-cms/issues/15187), shared by [Tanner Heffner](https://www.heffner.dev) in the work Slack, that suggests that we web and web-adjacent developers are heading for _more_ pain, not less; that the job market is lousy but we're in the middle of a tech _bubble_, and that will burst sooner or later and things will get _worse_.
+I woke up sad, feeling like I'd lost everything. Just one of those great big feelings of loss. Part of that is an [article I read](https://github.com/department-of-veterans-affairs/va.gov-cms/issues/15187), shared by my coworker [Tanner Heffner](https://www.heffner.dev) in the work Slack, that suggests that we web and web-adjacent developers are heading for _more_ pain, not less; that the job market is lousy but we're in the middle of a tech _bubble_, and that will burst sooner or later and things will get _worse_.
 
 Another part of it is that I watched _The Super Mario Bros. Movie_ last night, at the behest of my child. It was a tremendously depressing experience. As was common for members of my generation, I was deeply enchanted by the original Nintendo games. I still remember an overwhelming sense of mystery and awe at seeing _Super Mario Bros. 3_ for the first time. I remember having a dream about _Super Mario Bros. 2_ before I ever played it, just from sheer anticipation. And the movie was just... generic. No point going deeper here; the movie never did.
 
@@ -34,8 +34,33 @@ And of course this is fitting into the pattern of roguelikes, most of which will
 
 So let's state the problem clearly: I want _Hornvale_ to have an essentially infinite procedurally generated world, but I also want it to be _interesting_. How do we have both?
 
-There are some related problems, though, and the first is, simply: "How do we have an essentially infinite procedurally generated world?"
+There are some related problems, though, and the first is, simply: "How do we have an essentially infinite procedurally generated world? Like, at all?"
 
 So this article is about chunk loading, and how I'll handle that in _Hornvale_.
 
+_Hornvale_ won't have graphics, but I anticipate that there will be a significant computational load for each "chunk"; there will be creatures going about their daily affairs, which will involve some understanding of and interaction with their surroundings: what season is it? what's the weather like? what can I gather from the ground? what squabbles am I involved in? what pressures do I face? my family? my tribe? what do the stars tell the shaman?
 
+So, while I'm not necessarily concerned with all of the rays that need to be drawn to determine what is and is not visible, as I might be with a normal modern game engine, it's still important for me to restrict what is loaded at any given time. But we also need not to absolutely _minimize_ what is loaded; life _should_ go on, albeit a little slower, for chunks that the player is not currently exploring.
+
+## On the Nature of a Chunk
+
+A chunk in _Hornvale_ is not like one in most video games, even _Minecraft_. Rather than moving through a coherent, contiguous 2-D or 3-D space, we're transiting through a graph from node to node. We almost never actually _experience_ the edges, except as obstacles to overcome (doors, puzzles, etc). Our space does not actually need to be coherent.
+
+![_Zork I_ map](./images/zork-1-map-1.webp)
+
+Consequently, we lose a bit of mathematical consistency but gain a tremendous amount of flexibility. We can simply treat the world as an infinite graph where each node is a chunk, and each node is connected to at least one neighboring node by an edge.
+
+The node itself has attributes that determine how the chunk will be generated:
+- **difficulty**: which determines NPC levels, harshness of the environment, complexity, etc
+- **biome**: temperature, altitude, humidity, flora, fauna, appearance, natural resources, environmental hazards, etc
+- **theme**: wilderness, ruins, caves, enchanted forest, underwater city, dimensional rift, etc
+- **history**: procedurally generated history, influenced by neighbors
+- **culture**: cultural influences of the dominant culture or society within the chunk, affecting architecture, NPC dialogues, customs, local laws, quests, etc
+- **magic**: magical influences, impacting creatures, environmental conditions, available spells/enchantments, etc
+- **faction**: factional control to affect NPC friendliness, quests, etc
+- **abundance**: abundance of resources, sources of wealth, etc
+- **landmarks**: we might make prefabs that are always in a world that have some authored storyline, etc; one of each in each generated world, so this would be very, very rare to encounter
+
+Edges are an exit from one room in one chunk to another room in another chunk. These do not have to be bidirectional, but each node needs to be reachable. The difficulty of reaching/traversing the exit needs to be proportional to the increase in difficulty from the source to the destination. Traversing the edge might require a literal key, fighting a boss, having a specific magical power (e.g. teleportation) or an item (ring), requiring some knowledge (code word) or patience (opens only on a full moon), etc. Retreat should always be correspondingly easier... except when it's not (_Zork I_ trapdoor).
+
+Edges might have visibility/stealth opportunities, travel time/conditions that are altered by weather, etc, some narrative significance by beginning and ending chapters, require some environmental interaction, etc. Edges might be destroyed, e.g. a bridge that is blown up and has to be rebuilt later.
