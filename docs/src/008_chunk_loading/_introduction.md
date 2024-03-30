@@ -30,4 +30,12 @@ But I also remember the keen frustration of stomping through the forests and bei
 
 _Minecraft_, for all its many numerous strengths, doesn't solve this problem. It presents an endless number of places to explore, but none of them are particularly interesting. You can't find bits of lore, like in _Skyrim_ or _Baldur's Gate III_ or most other RPGs, that deepen your immersion in and attachment to the world. (Admittedly, the absence of lore is itself interesting.)
 
+And of course this is fitting into the pattern of roguelikes, most of which will procedurally generate dungeons that don't end up being very interesting. And I've [discussed this before](https://hornvale.github.io/book/004_dungeons/_introduction.html). But this isn't much of a project if I just complain about problems instead of trying to solve them interestingly, is it?
+
+So let's state the problem clearly: I want _Hornvale_ to have an essentially infinite procedurally generated world, but I also want it to be _interesting_. How do we have both?
+
+There are some related problems, though, and the first is, simply: "How do we have an essentially infinite procedurally generated world?"
+
+So this article is about chunk loading, and how I'll handle that in _Hornvale_.
+
 
