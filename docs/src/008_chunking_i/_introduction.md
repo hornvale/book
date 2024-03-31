@@ -1,4 +1,4 @@
-# _Minecraft_ and Chunk-Loading
+# _Minecraft_ and Chunking
 
 This morning I had a dream that I was back in college, at the University of New Mexico, which I briefly attended back in 2000. Weirdly, I was aware that it was 2024, because of an exchange within the dream about which I don't recall anything else.
 
@@ -50,17 +50,14 @@ A chunk in _Hornvale_ is not like one in most video games, even _Minecraft_. Rat
 
 Consequently, we lose a bit of mathematical consistency but gain a tremendous amount of flexibility. We can simply treat the world as an infinite graph where each node is a chunk, and each node is connected to at least one neighboring node by an edge.
 
-The node itself has attributes that determine how the chunk will be generated:
-- **difficulty**: which determines NPC levels, harshness of the environment, complexity, etc
-- **biome**: temperature, altitude, humidity, flora, fauna, appearance, natural resources, environmental hazards, etc
-- **theme**: wilderness, ruins, caves, enchanted forest, underwater city, dimensional rift, etc
-- **history**: procedurally generated history, influenced by neighbors
-- **culture**: cultural influences of the dominant culture or society within the chunk, affecting architecture, NPC dialogues, customs, local laws, quests, etc
-- **magic**: magical influences, impacting creatures, environmental conditions, available spells/enchantments, etc
-- **faction**: factional control to affect NPC friendliness, quests, etc
-- **abundance**: abundance of resources, sources of wealth, etc
-- **landmarks**: we might make prefabs that are always in a world that have some authored storyline, etc; one of each in each generated world, so this would be very, very rare to encounter
+I go into the specifics in more detail in [the Specification](https://github.com/hornvale/spec/), but I'll summarize the process here:
 
-Edges are an exit from one room in one chunk to another room in another chunk. These do not have to be bidirectional, but each node needs to be reachable. The difficulty of reaching/traversing the exit needs to be proportional to the increase in difficulty from the source to the destination. Traversing the edge might require a literal key, fighting a boss, having a specific magical power (e.g. teleportation) or an item (ring), requiring some knowledge (code word) or patience (opens only on a full moon), etc. Retreat should always be correspondingly easier... except when it's not (_Zork I_ trapdoor).
+1. Create vertices in a unit Cartesian coordinate plane using a modified version of Bridson's algorithm.
+2. Create a minimum spanning tree to connect the vertices using Prim's algorithm.
+3. Create additional cycles to improve navigability using a simple random function.
 
-Edges might have visibility/stealth opportunities, travel time/conditions that are altered by weather, etc, some narrative significance by beginning and ending chapters, require some environmental interaction, etc. Edges might be destroyed, e.g. a bridge that is blown up and has to be rebuilt later.
+That should lead to a graph that looks something like this:
+
+![World Example](./images/cycles_example.png)
+
+We are left with regions and straight-line-ish connections between them, which we can use as the basis of our world, and of our chunking system.
