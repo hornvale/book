@@ -50,3 +50,5 @@ This can be used as a trigger for "hey, remember me?" type events:
 - the player receives a letter/newspaper/warning/threat/bounty hunter from a person in `$region`
 - a loose end from the current quest ties off with a loose end from a quest in `$region`
 - etc
+
+That's not particularly important right now; we'll deal with other aspects of chunk management moving forward.
