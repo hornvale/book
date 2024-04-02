@@ -13,3 +13,11 @@ There are certain "primary" variables that are useful in generating terrain, whi
 - **Moisture**: Moisture is significantly influenced by elevation, particularly through the orographic effect, where moist air rises over mountains, cools, and releases precipitation, leading to wetter conditions on windward sides and drier conditions (rain shadows) on leeward sides. This can be simulated by first determining prevailing wind directions (which could be derived from latitude or arbitrarily set for diversity) and then adjusting moisture levels based on whether terrain is on the windward or leeward side of elevation changes.
 
 The practical implementation involves first generating our base Simplex noise maps for temperature and moisture, then applying adjustments based on the generated elevation map and the principles outlined above.
+
+The process is as follows:
+
+1. We first generate Simplex noise for elevation; elevation is affected less by other aspects, such as temperature and moisture, although we may revisit it. For increased realism, we generate multiple octaves of noise, which is to say that we first perturb a flat plane into some broad and simple wave, then revisit it at twice the level of detail but perturb by half as much, then revisit it again at twice the previous level of detail and perturb by half as much.
+
+![Elevation Map](./images/elevation_map.png)
+
+2. We then generate Simplex noise for temperature in such a way that we decrease as we head away from the equator.
