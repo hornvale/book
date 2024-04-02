@@ -20,4 +20,7 @@ The process is as follows:
 
 ![Elevation Map](./images/elevation_map.png)
 
-2. We then generate Simplex noise for temperature in such a way that we decrease as we head away from the equator.
+2. We then generate Simplex noise for temperature in such a way that we decrease as we head away from the equator; for each pixel, we find a baseline temperature that decreases quadratically as we move away from the equator, then add some noise for variation.
+
+![Initial Temperature Map](./images/initial_temperature_map.png)
+
