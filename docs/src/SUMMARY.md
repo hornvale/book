@@ -7,6 +7,6 @@
 - [_Cosmos_ and Tatooine](./005_astronomy/_introduction.md)
 - [_The Golden Bough_ and Procedural Comparative Religion](./006_supernatural/_introduction.md)
 - [The Sociology of the Goblin Village](./007_sociology/_introduction.md)
-- [Minecraft and Chunking](./008_chunking_i/_introduction.md)
+- [Chunking, Pt. I: The Region Graph](./008_chunking_i/_introduction.md)
 - [Chunking, Pt. II: Chunk Loading and Unloading](./009_chunking_ii/_introduction.md)
-- [Chunking, Pt. III: Regional Variables and Generation](./010_chunking_iii/_introduction.md)
+- [Terrain Generation, Pt. I: Elevation](./010_terrain_i/_introduction.md)

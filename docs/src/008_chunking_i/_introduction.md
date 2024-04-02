@@ -1,4 +1,4 @@
-# _Minecraft_ and Chunking
+# Chunking, Pt. I: The Region Graph
 
 This morning I had a dream that I was back in college, at the University of New Mexico, which I briefly attended back in 2000. Weirdly, I was aware that it was 2024, because of an exchange within the dream about which I don't recall anything else.
 
