@@ -8,12 +8,12 @@
 - [_The Golden Bough_ and Procedural Comparative Religion](./006_supernatural/_introduction.md)
 - [The Sociology of the Goblin Village](./007_sociology/_introduction.md)
 
-## Chunking
+# Chunking
 
 - [Pt. I: The Region Graph](./008_chunking_i/_introduction.md)
 - [Pt. II: Chunk Loading and Unloading](./009_chunking_ii/_introduction.md)
 
-## Terrain Generation
+# Terrain Generation
 
 - [Pt. I: Elevation](./010_terrain_i/_introduction.md)
 - [Pt. II: Temperature](./011_terrain_ii/_introduction.md)
