@@ -1,4 +1,4 @@
-## Terrain Generation, Pt. I: Regional Variables and Generation
+## Terrain Generation, Pt. I: Elevation
 
 In [Chunking, Pt. I](../008_chunking_i/), we figured out a way to generate a world map as a planar graph, using Poisson disk sampling and Bridson's algorithm to generate vertices, Prim's algorithm to create a minimum spanning tree connecting them, and injecting vertices semi-randomly to add cycles and improve navigability and nonlinearity.
 
