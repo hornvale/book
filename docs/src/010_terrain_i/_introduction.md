@@ -10,4 +10,4 @@ We first generate Simplex noise for elevation; elevation is affected less by oth
 
 ![Elevation Map](./images/elevation_map.png)
 
-This may not seem like much, but we will go _deep_ on subsequent steps.
+This may not seem like much, but we will go a bit deeper on subsequent steps.
