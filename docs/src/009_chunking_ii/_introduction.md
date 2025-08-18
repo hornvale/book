@@ -21,8 +21,8 @@ We can describe _J<sub>current</sub>_, the total current juice of the region, as
     - _J<sub>proximity</sub>_ (_d_) is the juice level at distance _d_
     - _J<sub>0</sub>_ is the juice level at the player's location
     - λ is the decay constant, determining how quickly the juice level decreases with distance
-    - _d_ is the distance from the player’s current position.
-  - _J<sub>linger</sub>_ (_t_) = _L_ ÷ ( 1 + _e<sup>-k(t - t<sub>0</sub>) </sup>_ )
+    - _d_ is the graph distance from the player's current position (shortest path in edges).
+  - _J<sub>linger</sub>_ (_t_) = _L_ ÷ ( 1 + _e<sup>k(t - t<sub>0</sub>) </sup>_ )
     - _J<sub>linger</sub>_ (_t_) is the juice level at time _t_
     - _L_ is the maximum juice level
     - _k_ is the steepness of the curve, determining how quickly the juice level falls off
@@ -53,4 +53,14 @@ This can be used as a trigger for "hey, remember me?" type events:
 - a loose end from the current quest ties off with a loose end from a quest in `$region`
 - etc
 
-That's not particularly important right now; we'll deal with other aspects of chunk management moving forward.
+## Design Notes and Refinements
+
+This juice system presents several interesting design challenges that merit consideration:
+
+**Distance in Graph Space**: Since our world is a graph rather than a traditional 2D grid, "distance" needs careful definition. Using shortest path length (number of edges) seems most natural, though it creates discrete rather than continuous distance values. This may cause abrupt juice transitions between chunks at the same graph distance.
+
+**Parameter Sensitivity**: The system involves six interacting parameters (_w<sub>proximity</sub>_, _w<sub>linger</sub>_, _J<sub>0</sub>_, λ, _k_, _L_) that all affect the final juice calculation. Small changes to any parameter could dramatically alter which chunks remain loaded, making the system potentially difficult to tune for optimal gameplay.
+
+**Juice Granularity**: Rather than treating juice as a continuous value, we might consider discrete simulation levels (Active, Background, Dormant) with juice determining transitions between these states. This could simplify implementation while preserving the core concept of engagement-based resource allocation.
+
+The fundamental insight—that computational resources should follow player attention and interest—remains compelling. Whether implemented as described or through a simpler approximation, this approach could create more dynamic and responsive procedural worlds.
